@@ -17,6 +17,10 @@
     <uses-permission android:name="android.permission.REBOOT"/>
     <uses-permission android:name="android.permission.ACCESS_CACHE_FILESYSTEM"/>
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -46,7 +50,17 @@
             android:excludeFromRecents="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.settings.SHORTCUT" />
+                <category android:name="com.android.settings.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".NotifyInKeyguard"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.systemui.SHORTCUT" />
             </intent-filter>
         </activity>
 

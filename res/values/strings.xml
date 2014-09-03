@@ -18,6 +18,7 @@
     <string name="menu_delete">Delete</string>
     <string name="menu_delete_all">Delete downloads</string>
     <string name="menu_system_info">System info</string>
+    <string name="gapps_not_installed">Please install a gapps package!</string>
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>

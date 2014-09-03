@@ -17,6 +17,8 @@ import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.vanir.updater.NotifyInKeyguard;
+import com.vanir.updater.R;
 import com.vanir.updater.misc.Constants;
 import com.vanir.updater.service.UpdateCheckService;
 import com.vanir.updater.utils.Utils;
@@ -49,6 +51,12 @@ public class UpdateCheckReceiver extends BroadcastReceiver {
         } else if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
             // We just booted. Store the boot check state
             prefs.edit().putBoolean(Constants.BOOT_CHECK_COMPLETED, false).apply();
+
+            // Check for Gapps install && opening message
+            Intent i = new Intent();
+            i.setClassName("com.vanir.updater", "com.vanir.updater.NotifyInKeyguard");
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         }
         if (Intent.ACTION_CHECK_FOR_UPDATES.equals(action)) {
             Log.i(TAG, "Received quicksettings check request");
