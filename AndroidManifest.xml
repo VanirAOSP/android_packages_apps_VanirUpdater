@@ -55,14 +55,14 @@
         </activity>
 
         <activity
-            android:name=".SendNotifyActivity"
-            android:label="@string/sendnotifyactivity"
+            android:name=".GappsCheckerActivity"
+            android:label="@string/gappscheckerlabel"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:enabled="true"
             android:excludeFromRecents="true"
             android:launchMode="singleTop" >
             <intent-filter>
-                <action android:name="com.vanir.updater.SendNotifyActivity" />
+                <action android:name="com.vanir.updater.GappsCheckerActivity" />
             </intent-filter>
         </activity>
 

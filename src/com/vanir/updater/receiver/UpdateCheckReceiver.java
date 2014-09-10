@@ -17,11 +17,12 @@ import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.vanir.updater.SendNotifyActivity;
-import com.vanir.updater.R;
 import com.vanir.updater.misc.Constants;
+import com.vanir.updater.GappsCheckerActivity;
 import com.vanir.updater.service.UpdateCheckService;
 import com.vanir.updater.utils.Utils;
+
+import com.vanir.updater.R;
 
 public class UpdateCheckReceiver extends BroadcastReceiver {
     private static final String TAG = "UpdateCheckReceiver";
@@ -52,8 +53,8 @@ public class UpdateCheckReceiver extends BroadcastReceiver {
             // We just booted. Store the boot check state
             prefs.edit().putBoolean(Constants.BOOT_CHECK_COMPLETED, false).apply();
 
-            // Check for Gapps install && opening message
-            Intent i = new Intent(context.getApplicationContext(), SendNotifyActivity.class);
+            // Check for Gapps install && open message in the case of their absence
+            Intent i = new Intent(context.getApplicationContext(), GappsCheckerActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             context.getApplicationContext().startActivity(i);
         }
