@@ -40,7 +40,7 @@ public class GappsCheckerActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!areGappsInstalled()) {
+        if (!areGappsInstalled(this)) {
             PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             final PowerManager.WakeLock wl = pm.newWakeLock(
                     PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK, "com.vanir.updater");
@@ -72,8 +72,8 @@ public class GappsCheckerActivity extends Activity {
         super.onResume();
     }
 
-    private boolean areGappsInstalled() {
-        PackageManager pm = this.getPackageManager();
+    static boolean areGappsInstalled(Context context) {
+        PackageManager pm = context.getPackageManager();
         try {
             pm.getPackageInfo(GMS_CORE, PackageManager.GET_ACTIVITIES);
         } catch (NameNotFoundException e) {
