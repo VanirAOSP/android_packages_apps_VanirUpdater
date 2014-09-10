@@ -22,25 +22,23 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.vanir.updater.utils.Utils;
+
 /*
  * Activity to show alert dialogs on keyguard
 */
 public class GappsCheckerActivity extends Activity {
-    private static final String GMS_CORE = "com.google.android.gms";
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!areGappsInstalled()) {
+        if (!Utils.areGappsInstalled(this)) {
             PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             final PowerManager.WakeLock wl = pm.newWakeLock(
                     PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK, "com.vanir.updater");
@@ -70,15 +68,5 @@ public class GappsCheckerActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-    }
-
-    private boolean areGappsInstalled() {
-        PackageManager pm = this.getPackageManager();
-        try {
-            pm.getPackageInfo(GMS_CORE, PackageManager.GET_ACTIVITIES);
-        } catch (NameNotFoundException e) {
-            return false;
-        }
-        return true;
     }
 }
