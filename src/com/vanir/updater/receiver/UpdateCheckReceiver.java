@@ -53,10 +53,12 @@ public class UpdateCheckReceiver extends BroadcastReceiver {
             // We just booted. Store the boot check state
             prefs.edit().putBoolean(Constants.BOOT_CHECK_COMPLETED, false).apply();
 
-            // Check for Gapps install && open message in the case of their absence
-            Intent i = new Intent(context.getApplicationContext(), GappsCheckerActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.getApplicationContext().startActivity(i);
+            if (!GappsCheckerActivity.areGappsInstalled()) {
+                // Check for Gapps install && open message in the case of their absence
+                Intent i = new Intent(context.getApplicationContext(), GappsCheckerActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.getApplicationContext().startActivity(i);
+            }
         }
         if (Intent.ACTION_CHECK_FOR_UPDATES.equals(action)) {
             Log.i(TAG, "Received quicksettings check request");

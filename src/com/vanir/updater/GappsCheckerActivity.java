@@ -72,7 +72,7 @@ public class GappsCheckerActivity extends Activity {
         super.onResume();
     }
 
-    private boolean areGappsInstalled() {
+    static boolean areGappsInstalled() {
         PackageManager pm = this.getPackageManager();
         try {
             pm.getPackageInfo(GMS_CORE, PackageManager.GET_ACTIVITIES);
