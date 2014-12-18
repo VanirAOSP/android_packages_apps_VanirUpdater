@@ -235,11 +235,14 @@ public class UpdateCheckService extends IntentService {
         int updateType = prefs.getInt(Constants.UPDATE_TYPE_PREF, 0);
 
         LinkedList<UpdateInfo> lastUpdates = State.loadState(this);
-
-        LinkedList<UpdateInfo> updates = getUpdateInfos(getString(R.string.conf_release_server_url)+Utils.getDeviceType()+"/", updateType);
-
-        updates.addAll(getUpdateInfos(getString(R.string.conf_nightly_server_url)+Utils.getDeviceType()+"/", updateType));
-
+        String ServerUrl = getString(R.string.conf_release_server_url);
+        if (updateType == Constants.UPDATE_TYPE_EXODUS) {
+            ServerUrl = getString(R.string.conf_exodus_server_url);
+        }
+        LinkedList<UpdateInfo> updates = getUpdateInfos(ServerUrl+Utils.getDeviceType()+"/", updateType);
+        if (updateType != Constants.UPDATE_TYPE_EXODUS) {
+            updates.addAll(getUpdateInfos(getString(R.string.conf_nightly_server_url)+Utils.getDeviceType()+"/", updateType));
+        }
         int newUpdates = 0, realUpdates = 0;
         for (UpdateInfo ui : updates) {
             if (!lastUpdates.contains(ui)) {
@@ -261,7 +264,7 @@ public class UpdateCheckService extends IntentService {
     }
 
     private LinkedList<UpdateInfo> getUpdateInfos(String url, int updateType) {
-        boolean includeAll = updateType == Constants.UPDATE_TYPE_ALL_NIGHTLY;
+        boolean includeAll = updateType == Constants.UPDATE_TYPE_ALL_NIGHTLY || updateType == Constants.UPDATE_TYPE_EXODUS;
             //|| updateType == Constants.UPDATE_TYPE_ALL_STABLE;
         Log.d(TAG, "Looking for updates at "+url+"vanir_update_list");
         LinkedList<String> versions = Utils.readMultilineFile(url+"vanir_updater_list");
