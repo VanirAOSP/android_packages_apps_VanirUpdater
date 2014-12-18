@@ -9,5 +9,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="conf_nightly_server_url" translatable="false">http://www.emccann.net/nuclearmistake/VanirAOSPNightlies/</string>
     <string name="conf_release_server_url" translatable="false">http://www.emccann.net/nuclearmistake/VanirAOSPRelease/</string>
+    <string name="conf_exodus_server_url" translatable="false">http://updates.vanir-exodus.from-me.org/</string>
     <bool name="alternateIsInternal">false</bool>
 </resources>

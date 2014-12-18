@@ -45,11 +45,13 @@
     <string-array name="vanir_update_type_entries" translatable="false">
         <item>@string/type_new_incl_nightly</item>
         <item>@string/type_all_incl_nightly</item>
+        <item>@string/type_exodus</item>
     </string-array>
 
     <string-array name="vanir_update_type_values" translatable="false">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
 
 </resources>
