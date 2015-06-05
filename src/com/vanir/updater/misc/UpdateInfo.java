@@ -76,13 +76,6 @@ public class UpdateInfo implements Parcelable, Serializable {
         return mFileName;
     }
 
-    /**
-     * Get build type
-     */
-    public Type getType() {
-        return mType;
-    }
-
    /**
      * Get MD5
      */
