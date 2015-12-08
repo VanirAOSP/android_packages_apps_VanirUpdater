@@ -44,6 +44,10 @@ import java.net.MalformedURLException;
 import java.util.LinkedList;
 
 public class Utils {
+    public static final String TAG = "VanirUpdaterUtils";
+    public static final boolean DBG = true;
+    public static final boolean NO_FLASH = true;
+
     private Utils() {
         // this class is not supposed to be instantiated
     }
@@ -114,6 +118,14 @@ public class Utils {
         }
     }
 
+    private static void Exec(OutputStream os, String cmd) throws IOException {
+        if (DBG) {
+            Log.i(TAG, cmd);
+        }
+        cmd += "\n";
+        os.write(cmd.getBytes());
+    }
+
     public static void triggerUpdate(Context context, String updateFileName) throws IOException {
         /*
          * Should perform the following steps.
@@ -127,8 +139,7 @@ public class Utils {
         // Set the 'boot recovery' command
         Process p = Runtime.getRuntime().exec("sh");
         OutputStream os = p.getOutputStream();
-        os.write("mkdir -p /cache/recovery/\n".getBytes());
-        os.write("echo 'boot-recovery' >/cache/recovery/command\n".getBytes());
+        Exec(os, "mkdir -p /cache/recovery/");
 
         // See if backups are enabled and add the nandroid flag
         /* TODO: add this back once we have a way of doing backups that is not recovery specific
@@ -145,13 +156,18 @@ public class Utils {
         String updatePath = Environment.isExternalStorageEmulated() ? directPath :
                 primaryStoragePath;
         String cmd = "echo '--update_package=" + updatePath + "/" + Constants.UPDATES_FOLDER + "/"
-                + updateFileName + "' >> /cache/recovery/command\n";
-        os.write(cmd.getBytes());
+                + updateFileName + "' >> /cache/recovery/command";
+        Exec(os, cmd);
         os.flush();
 
+
         // Trigger the reboot
-        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        powerManager.reboot("recovery");
+        if (!NO_FLASH) {
+            PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            powerManager.reboot("recovery");
+        } else {
+            Log.e(TAG, "Not actually rebooting to recovery!");
+        }
     }
 
     public static LinkedList<String> readMultilineFile(String urlstr) {
